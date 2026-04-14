@@ -1,9 +1,25 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Lazy initialization to avoid build-time errors when env vars aren't loaded
+let _supabase: SupabaseClient | null = null
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+function getSupabase(): SupabaseClient {
+  if (_supabase) return _supabase
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+  }
+  _supabase = createClient(supabaseUrl, supabaseAnonKey)
+  return _supabase
+}
+
+// For backward compatibility - used in client components
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_, prop) {
+    return (getSupabase() as any)[prop]
+  },
+})
 
 export interface User {
   id: string
@@ -33,7 +49,7 @@ export const CREDIT_COSTS: Record<string, number> = {
 }
 
 export async function getUserCredits(userId: string): Promise<number> {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from('users')
     .select('credits')
     .eq('id', userId)
@@ -49,7 +65,7 @@ export async function checkCredits(userId: string, tool: string): Promise<{ hasC
 
 export async function deductCredits(userId: string, tool: string): Promise<boolean> {
   const cost = CREDIT_COSTS[tool] ?? 1
-  const { data, error } = await supabase.rpc('deduct_credits', {
+  const { error } = await getSupabase().rpc('deduct_credits', {
     user_id: userId,
     amount: cost,
   })

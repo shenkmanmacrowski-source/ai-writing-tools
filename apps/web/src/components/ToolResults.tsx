@@ -19,7 +19,7 @@ interface ToolResult {
 }
 
 interface ToolResultsProps {
-  onSubmit: (data: any) => Promise<ToolResult>
+  onSubmit?: (data: any) => Promise<ToolResult>
   resultRenderer: (result: ToolResult) => React.ReactNode
   inputPlaceholder: string
   creditCost: number
