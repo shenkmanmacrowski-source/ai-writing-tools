@@ -1,0 +1,14 @@
+{
+  "name": "ai-writing-tools",
+  "compatibility_date": "2024-01-01",
+  "pages_build_output_dir": "apps/web/out",
+  "vars": {
+    "NEXT_PUBLIC_LANG": "en"
+  },
+  "routes": [
+    {
+      "pattern": "aiwriting.tools",
+      "zone_name": "aiwriting.tools"
+    }
+  ]
+}
