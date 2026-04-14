@@ -1,4 +1,5 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createClient as _createClient, SupabaseClient } from '@supabase/supabase-js'
+export { _createClient as createClient }
 
 // Lazy initialization to avoid build-time errors when env vars aren't loaded
 let _supabase: SupabaseClient | null = null
@@ -10,7 +11,7 @@ function getSupabase(): SupabaseClient {
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
   }
-  _supabase = createClient(supabaseUrl, supabaseAnonKey)
+  _supabase = _createClient(supabaseUrl, supabaseAnonKey)
   return _supabase
 }
 
