@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // Disabled: conflicts with Supabase SSR and API routes
+  output: 'export',
   images: {
     unoptimized: true,
   },
