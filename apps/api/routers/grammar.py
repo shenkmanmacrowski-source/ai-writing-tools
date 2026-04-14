@@ -5,7 +5,7 @@ from openai import OpenAI
 import os
 
 router = APIRouter(prefix="/grammar", tags=["Grammar Checker"])
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"))
 
 class GrammarRequest(BaseModel):
     text: str
@@ -47,7 +47,7 @@ Respond in JSON format:
 }}"""
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="MiniMax-M2.7",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=2000,
         response_format={"type": "json_object"}

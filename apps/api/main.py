@@ -1,13 +1,15 @@
 """
 AI Writing Tools — FastAPI Backend
 """
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from routers import rewrite, grammar, ai_detect, summarize, citation, plagiarism, auth
 import os
 from dotenv import load_dotenv
 
+# Load env FIRST, before importing routers
 load_dotenv()
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import rewrite, grammar, ai_detect, summarize, citation, plagiarism, auth
 
 app = FastAPI(
     title="AI Writing Tools API",
@@ -17,20 +19,19 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(rewrite.router, prefix="/api")
-app.include_router(grammar.router, prefix="/api")
-app.include_router(ai_detect.router, prefix="/api")
-app.include_router(summarize.router, prefix="/api")
-app.include_router(citation.router, prefix="/api")
-app.include_router(plagiarism.router, prefix="/api")
-app.include_router(auth.router, prefix="/api")
+app.include_router(rewrite.router)
+app.include_router(grammar.router)
+app.include_router(ai_detect.router)
+app.include_router(summarize.router)
+app.include_router(citation.router)
+app.include_router(plagiarism.router)
+app.include_router(auth.router)
 
 
 @app.get("/")

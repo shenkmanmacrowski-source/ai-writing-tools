@@ -3,10 +3,9 @@ import Link from 'next/link'
 const TOOLS = [
   { id: 'rewriter', name: 'Rewriter', icon: '✍️', href: '/tools/rewriter', color: 'from-blue-500 to-indigo-600' },
   { id: 'grammar', name: 'Grammar Checker', icon: '✅', href: '/tools/grammar', color: 'from-emerald-500 to-teal-600' },
-  { id: 'ai-detect', name: 'AI Detector', icon: '🔍', href: '/tools/ai-detect', color: 'from-amber-500 to-orange-600' },
   { id: 'summarize', name: 'Summarizer', icon: '📝', href: '/tools/summarize', color: 'from-purple-500 to-pink-600' },
   { id: 'citation', name: 'Citation Generator', icon: '📚', href: '/tools/citation', color: 'from-rose-500 to-red-600' },
-  { id: 'plagiarism', name: 'Plagiarism Checker', icon: '🛡️', href: '/tools/plagiarism', color: 'from-cyan-500 to-blue-600' },
+
 ]
 
 export default function ToolsPage() {

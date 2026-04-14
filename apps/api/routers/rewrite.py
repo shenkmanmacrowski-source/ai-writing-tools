@@ -5,7 +5,7 @@ from openai import OpenAI
 import os
 
 router = APIRouter(prefix="/rewrite", tags=["Rewriter"])
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"))
 
 MODES = {
     "social": "Rewrite this for social media. Make it engaging, concise (max 280 chars for Twitter), and suitable for Twitter/LinkedIn/Instagram. Use emojis naturally where appropriate:",
@@ -33,7 +33,7 @@ async def rewrite(req: RewriteRequest):
     prompt = MODES.get(req.mode, MODES["casual"]) + f"\n\n{req.text}"
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="MiniMax-M2.7",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=2000,
         temperature=0.7

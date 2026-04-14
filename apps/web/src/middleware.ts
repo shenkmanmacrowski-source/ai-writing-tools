@@ -1,26 +1,31 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import type { NextRequest, CookieOptions } from 'next/server'
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
 
-  // Create Supabase client for middleware
-  const supabase = createMiddlewareClient({ req, res })
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return req.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          req.cookies.set({ name, value, ...options })
+          res.cookies.set({ name, value, ...options })
+        },
+        remove(name: string, options: CookieOptions) {
+          req.cookies.set({ name, value: '', ...options })
+          res.cookies.set({ name, value: '', ...options })
+        },
+      },
+    }
+  )
 
-  // Refresh session if expired
-  const { data: { session } } = await supabase.auth.getSession()
-
-  // Protected routes
-  const protectedRoutes = ['/dashboard', '/tools/rewriter', '/tools/grammar', '/tools/ai-detect', '/tools/summarize', '/tools/citation', '/tools/plagiarism']
-
-  const isProtected = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))
-
-  if (isProtected && !session) {
-    const redirectUrl = new URL('/auth', req.url)
-    redirectUrl.searchParams.set('redirect', req.nextUrl.pathname)
-    return NextResponse.redirect(redirectUrl)
-  }
+  await supabase.auth.getSession()
 
   return res
 }

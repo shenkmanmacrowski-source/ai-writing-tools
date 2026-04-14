@@ -3,7 +3,7 @@ import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   title: 'AI Writing Tools — Write Better, Faster',
-  description: 'Free AI-powered writing tools: Rewriter, Grammar Checker, AI Detector, Summarizer, Citation Generator & Plagiarism Checker for global users.',
+  description: 'Free AI-powered writing tools: Rewriter, Grammar Checker, Summarizer & Citation Generator for global users.',
   icons: {
     icon: '/favicon.ico',
   },

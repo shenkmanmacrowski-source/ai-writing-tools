@@ -6,7 +6,7 @@ import os
 import httpx
 
 router = APIRouter(prefix="/summarize", tags=["Summarizer"])
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"))
 
 LENGTH_PROMPTS = {
     "short": "Provide a very brief summary in 2-3 sentences, then list 3 keywords.",
@@ -54,7 +54,7 @@ Text:
 {content}"""
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="MiniMax-M2.7",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=1500,
         response_format={"type": "json_object"}

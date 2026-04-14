@@ -22,16 +22,6 @@ const TOOLS = [
     color: 'from-emerald-500 to-teal-600',
   },
   {
-    id: 'ai-detect',
-    name: 'AI Detector',
-    description: 'Check if your text was written by AI or a human — perfect for academic submissions.',
-    icon: '🔍',
-    href: '/tools/ai-detect',
-    scene: ['Academic'],
-    credits: 8,
-    color: 'from-amber-500 to-orange-600',
-  },
-  {
     id: 'summarize',
     name: 'Summarizer',
     description: 'Summarize long articles, papers, or documents into concise key points.',
@@ -51,16 +41,6 @@ const TOOLS = [
     credits: 3,
     color: 'from-rose-500 to-red-600',
   },
-  {
-    id: 'plagiarism',
-    name: 'Plagiarism Checker',
-    description: 'Check your text originality against billions of web pages for plagiarism.',
-    icon: '🛡️',
-    href: '/tools/plagiarism',
-    scene: ['Academic'],
-    credits: 20,
-    color: 'from-cyan-500 to-blue-600',
-  },
 ]
 
 const SCENES = [
@@ -72,9 +52,9 @@ const SCENES = [
   },
   {
     title: 'Academic Writing',
-    description: 'Polish papers, generate citations, and ensure originality — everything you need for academic success.',
+    description: 'Polish papers and generate citations — everything you need for academic success.',
     icon: '🎓',
-    tools: ['rewriter', 'grammar', 'ai-detect', 'summarize', 'citation', 'plagiarism'],
+    tools: ['rewriter', 'grammar', 'summarize', 'citation'],
   },
 ]
 
@@ -94,7 +74,7 @@ export default function HomePage() {
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             AI-powered writing tools for everyone — from social media managers to PhD candidates.
-            Rewriter, Grammar Checker, AI Detector, Summarizer, Citation Generator & Plagiarism Checker.
+            Rewriter, Grammar Checker, Summarizer & Citation Generator.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/tools" className="btn-primary text-base px-8 py-3.5 shadow-lg shadow-brand-200">
